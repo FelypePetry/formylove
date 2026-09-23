@@ -28,7 +28,6 @@
       position: relative;
     }
 
-    /* Partículas de coração de fundo */
     .heart-particle {
       position: fixed;
       bottom: -30px;
@@ -56,7 +55,6 @@
       }
     }
 
-    /* Tela de Toque Inicial */
     #start-screen {
       position: fixed;
       inset: 0;
@@ -74,6 +72,7 @@
     #start-screen.hidden {
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
     }
 
     .start-btn {
@@ -93,7 +92,6 @@
       transform: scale(0.95);
     }
 
-    /* Cartão Principal */
     .container {
       position: relative;
       z-index: 5;
@@ -118,7 +116,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Contador de Tempo */
     .counter-wrapper {
       margin-bottom: 24px;
       background: rgba(0, 0, 0, 0.25);
@@ -159,7 +156,6 @@
       text-transform: uppercase;
     }
 
-    /* Caixa da Mensagem Typewriter */
     .message-box {
       font-size: 0.95rem;
       line-height: 1.8;
@@ -200,7 +196,6 @@
 </head>
 <body>
 
-  <!-- Tela de Toque Inicial -->
   <div id="start-screen">
     <div style="font-size: 3rem;">💌</div>
     <p style="font-size: 0.95rem; color: #ddd; max-width: 280px; text-align: center;">
@@ -209,11 +204,9 @@
     <button class="start-btn" id="open-btn">Abrir Mensagem</button>
   </div>
 
-  <!-- Cartão de Leitura -->
   <div class="container">
     <div class="tag-title">Feliz Aniversário! ✨</div>
 
-    <!-- Bloco Contador -->
     <div class="counter-wrapper">
       <div class="counter-label">Juntos há exatamente</div>
       <div class="timer-grid">
@@ -236,28 +229,20 @@
       </div>
     </div>
 
-    <!-- Bloco Typewriter -->
     <div class="message-box">
       <span id="typewriter-text"></span><span class="cursor" id="cursor"></span>
       <div class="signature" id="signature">Com todo meu amor, para sempre. ❤️</div>
     </div>
   </div>
 
-  <!-- Trilha Sonora -->
   <audio id="bg-audio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // -------------------------------------------------------------
-    // DATA DE INÍCIO DO NAMORO: 18 de Abril de 2026
-    // Mês 3 = Abril (0-indexed: 0=Jan, 1=Fev, 2=Mar, 3=Abr...)
-    // -------------------------------------------------------------
+    // Data: 18 de Abril de 2026 (Mês 3 = Abril no JavaScript)
     const startDate = new Date(2026, 3, 18, 0, 0, 0);
 
-    // -------------------------------------------------------------
-    // TEXTO DA CARTA
-    // -------------------------------------------------------------
     const message = `Feliz aniversário, meu amor!
 
 Hoje o dia é todo seu, mas eu não canso de pensar no quanto eu sou o maior vencedor dessa história. Desde o exato dia em que te conheci, eu já fiquei completamente apaixonado por você. E, a cada dia que passa, essa certeza só cresce.
@@ -270,12 +255,17 @@ Obrigado por ser essa mulher incrível. Que o seu novo ciclo seja brilhante e qu
 
 Te amo!`;
 
-    // Lógica do Contador
     function updateCounter() {
       const now = new Date();
       const diff = now - startDate;
 
-      if (diff < 0) return;
+      if (diff < 0) {
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -291,7 +281,6 @@ Te amo!`;
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // Lógica da Máquina de Escrever
     let charIndex = 0;
     const textTarget = document.getElementById('typewriter-text');
     const signature = document.getElementById('signature');
@@ -316,27 +305,32 @@ Te amo!`;
       }
     }
 
-    // Inicialização ao tocar no botão de entrada
     const openBtn = document.getElementById('open-btn');
     const startScreen = document.getElementById('start-screen');
     const audio = document.getElementById('bg-audio');
 
     openBtn.addEventListener('click', () => {
       startScreen.classList.add('hidden');
-      
       audio.volume = 0.5;
       audio.play().catch(() => {});
-
       setTimeout(typeWriter, 500);
     });
 
-    // Gerador de Partículas de Corações
     function createHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart-particle';
-      heart.Calculando a partir de **18 de abril de 2026** até hoje (**23 de setembro de 2026**):
+      heart.innerHTML = '♥';
+      heart.style.left = Math.random() * 95 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+      heart.style.fontSize = Math.random() * 12 + 12 + 'px';
+      document.body.appendChild(heart);
 
-* **Meses e dias corridos:** 5 meses e 5 dias
-* **Total em dias:** 158 dias
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
 
-Se você estiver integrando isso em algum código, widget ou texto específico, me avise o formato exato que deseja atualizar!
+    setInterval(createHeart, 600);
+  </script>
+</body>
+</html>
