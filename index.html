@@ -43,12 +43,8 @@
         transform: translateY(0) scale(0.8) rotate(0deg);
         opacity: 0;
       }
-      20% {
-        opacity: 0.8;
-      }
-      80% {
-        opacity: 0.6;
-      }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.6; }
       100% {
         transform: translateY(-110vh) scale(1.3) rotate(360deg);
         opacity: 0;
@@ -64,24 +60,18 @@
       justify-content: center;
       align-items: center;
       gap: 18px;
-      z-index: 20;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      z-index: 999;
+      transition: opacity 0.6s ease;
       padding: 20px;
-    }
-
-    #start-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
     }
 
     .start-btn {
       background: linear-gradient(135deg, #e84393, #d63031);
       color: white;
       border: none;
-      padding: 14px 34px;
+      padding: 14px 36px;
       border-radius: 999px;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(232, 67, 147, 0.4);
@@ -196,14 +186,16 @@
 </head>
 <body>
 
+  <!-- Tela Inicial -->
   <div id="start-screen">
     <div style="font-size: 3rem;">💌</div>
     <p style="font-size: 0.95rem; color: #ddd; max-width: 280px; text-align: center;">
       Preparei algo especial para o seu dia...
     </p>
-    <button class="start-btn" id="open-btn">Abrir Mensagem</button>
+    <button class="start-btn" id="open-btn" onclick="iniciarExperiencia()">Abrir Mensagem</button>
   </div>
 
+  <!-- Cartão de Conteúdo -->
   <div class="container">
     <div class="tag-title">Feliz Aniversário! ✨</div>
 
@@ -240,7 +232,6 @@
   </audio>
 
   <script>
-    // Data: 18 de Abril de 2026 (Mês 3 = Abril no JavaScript)
     const startDate = new Date(2026, 3, 18, 0, 0, 0);
 
     const message = `Feliz aniversário, meu amor!
@@ -300,21 +291,37 @@ Te amo!`;
 
         setTimeout(typeWriter, delay);
       } else {
-        document.getElementById('cursor').style.display = 'none';
-        signature.style.opacity = '1';
+        const cur = document.getElementById('cursor');
+        if (cur) cur.style.display = 'none';
+        if (signature) signature.style.opacity = '1';
       }
     }
 
-    const openBtn = document.getElementById('open-btn');
-    const startScreen = document.getElementById('start-screen');
-    const audio = document.getElementById('bg-audio');
+    let started = false;
+    function iniciarExperiencia() {
+      if (started) return;
+      started = true;
 
-    openBtn.addEventListener('click', () => {
-      startScreen.classList.add('hidden');
-      audio.volume = 0.5;
-      audio.play().catch(() => {});
+      const screen = document.getElementById('start-screen');
+      screen.style.opacity = '0';
+      screen.style.pointerEvents = 'none';
+      setTimeout(() => {
+        screen.style.display = 'none';
+      }, 600);
+
+      try {
+        const audio = document.getElementById('bg-audio');
+        if (audio) {
+          audio.volume = 0.5;
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        }
+      } catch (e) {}
+
       setTimeout(typeWriter, 500);
-    });
+    }
 
     function createHeart() {
       const heart = document.createElement('div');
