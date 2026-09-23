@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Aniversário, Meu Amor ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2d132c, #100720);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      color: #fff;
+      padding: 24px 16px;
+      position: relative;
+    }
+
+    /* Partículas de coração de fundo */
+    .heart-particle {
+      position: fixed;
+      bottom: -30px;
+      color: rgba(235, 110, 140, 0.45);
+      font-size: 18px;
+      pointer-events: none;
+      animation: floatUp 7s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.3) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Tela de Toque Inicial */
+    #start-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #2d132c, #100720);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      z-index: 20;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      padding: 20px;
+    }
+
+    #start-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .start-btn {
+      background: linear-gradient(135deg, #e84393, #d63031);
+      color: white;
+      border: none;
+      padding: 14px 34px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(232, 67, 147, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .start-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Cartão Principal */
+    .container {
+      position: relative;
+      z-index: 5;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 28px 20px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      margin: auto;
+    }
+
+    .tag-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+      color: #ff99bb;
+      letter-spacing: 0.5px;
+    }
+
+    /* Contador de Tempo */
+    .counter-wrapper {
+      margin-bottom: 24px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      padding: 16px 12px;
+    }
+
+    .counter-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #dfdfe6;
+      margin-bottom: 12px;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .time-unit {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 8px 4px;
+    }
+
+    .time-unit span {
+      display: block;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #fff;
+    }
+
+    .time-unit small {
+      font-size: 0.65rem;
+      color: #ffb3c6;
+      text-transform: uppercase;
+    }
+
+    /* Caixa da Mensagem Typewriter */
+    .message-box {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      text-align: left;
+      color: #eaeaea;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 20px 18px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background-color: #ff85a1;
+      vertical-align: text-bottom;
+      animation: blink 0.9s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .signature {
+      margin-top: 18px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      text-align: right;
+      color: #ff99bb;
+      font-size: 1.1rem;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tela de Toque Inicial -->
+  <div id="start-screen">
+    <div style="font-size: 3rem;">💌</div>
+    <p style="font-size: 0.95rem; color: #ddd; max-width: 280px; text-align: center;">
+      Preparei algo especial para o seu dia...
+    </p>
+    <button class="start-btn" id="open-btn">Abrir Mensagem</button>
+  </div>
+
+  <!-- Cartão de Leitura -->
+  <div class="container">
+    <div class="tag-title">Feliz Aniversário! ✨</div>
+
+    <!-- Bloco Contador -->
+    <div class="counter-wrapper">
+      <div class="counter-label">Juntos há exatamente</div>
+      <div class="timer-grid">
+        <div class="time-unit">
+          <span id="days">0</span>
+          <small>Dias</small>
+        </div>
+        <div class="time-unit">
+          <span id="hours">0</span>
+          <small>Horas</small>
+        </div>
+        <div class="time-unit">
+          <span id="minutes">0</span>
+          <small>Min</small>
+        </div>
+        <div class="time-unit">
+          <span id="seconds">0</span>
+          <small>Seg</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco Typewriter -->
+    <div class="message-box">
+      <span id="typewriter-text"></span><span class="cursor" id="cursor"></span>
+      <div class="signature" id="signature">Com todo meu amor, para sempre. ❤️</div>
+    </div>
+  </div>
+
+  <!-- Trilha Sonora -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // -------------------------------------------------------------
+    // DATA DE INÍCIO DO NAMORO: 18 de Abril de 2026
+    // Mês 3 = Abril (0-indexed: 0=Jan, 1=Fev, 2=Mar, 3=Abr...)
+    // -------------------------------------------------------------
+    const startDate = new Date(2026, 3, 18, 0, 0, 0);
+
+    // -------------------------------------------------------------
+    // TEXTO DA CARTA
+    // -------------------------------------------------------------
+    const message = `Feliz aniversário, meu amor!
+
+Hoje o dia é todo seu, mas eu não canso de pensar no quanto eu sou o maior vencedor dessa história. Desde o exato dia em que te conheci, eu já fiquei completamente apaixonado por você. E, a cada dia que passa, essa certeza só cresce.
+
+O que mais me encanta em você é a sua parceria. Eu admiro muito o jeito que você me apoia em tudo e a forma linda como você faz de tudo para sermos felizes. Você é o meu porto seguro. Na verdade, eu amo cada detalhe seu, até mesmo o seu ronco que no fundo só me lembra do privilégio que é poder dormir e acordar ao seu lado.
+
+Hoje, o meu maior desejo para você é que a vida te devolva em dobro toda a alegria que você me traz. Que a gente continue construindo a nossa história para, logo logo, estarmos morando juntos, casados e viajando por aí, colecionando o mundo lado a lado.
+
+Obrigado por ser essa mulher incrível. Que o seu novo ciclo seja brilhante e que você se sinta a pessoa mais amada do mundo, hoje e sempre.
+
+Te amo!`;
+
+    // Lógica do Contador
+    function updateCounter() {
+      const now = new Date();
+      const diff = now - startDate;
+
+      if (diff < 0) return;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // Lógica da Máquina de Escrever
+    let charIndex = 0;
+    const textTarget = document.getElementById('typewriter-text');
+    const signature = document.getElementById('signature');
+
+    function typeWriter() {
+      if (charIndex < message.length) {
+        textTarget.textContent += message.charAt(charIndex);
+        charIndex++;
+
+        const currentChar = message.charAt(charIndex - 1);
+        let delay = 32;
+
+        if (currentChar === '.') delay = 320;
+        else if (currentChar === '!') delay = 380;
+        else if (currentChar === ',') delay = 180;
+        else if (currentChar === '\n') delay = 420;
+
+        setTimeout(typeWriter, delay);
+      } else {
+        document.getElementById('cursor').style.display = 'none';
+        signature.style.opacity = '1';
+      }
+    }
+
+    // Inicialização ao tocar no botão de entrada
+    const openBtn = document.getElementById('open-btn');
+    const startScreen = document.getElementById('start-screen');
+    const audio = document.getElementById('bg-audio');
+
+    openBtn.addEventListener('click', () => {
+      startScreen.classList.add('hidden');
+      
+      audio.volume = 0.5;
+      audio.play().catch(() => {});
+
+      setTimeout(typeWriter, 500);
+    });
+
+    // Gerador de Partículas de Corações
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart-particle';
+      heart.Calculando a partir de **18 de abril de 2026** até hoje (**23 de setembro de 2026**):
+
+* **Meses e dias corridos:** 5 meses e 5 dias
+* **Total em dias:** 158 dias
+
+Se você estiver integrando isso em algum código, widget ou texto específico, me avise o formato exato que deseja atualizar!
